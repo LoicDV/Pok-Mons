@@ -19,6 +19,13 @@ def read(file):
 
         return (books, lib, days, scores, list_lib)
 
+def isIn(bibli, book):
+    t = bibli[1]
+    for i in range (len(t)- 1):
+        if (t[i] == book):
+            return True
+    return False
+
 def rm(bibli, book):
     t = bibli[1]
     verif = False
@@ -28,6 +35,14 @@ def rm(bibli, book):
             t.remove(book)
             verif = True
         i += 1
+
+def refresh(big, book):
+    liste = big[4]
+    longueur = len(liste) - 1
+    for i in range(longueur):
+        if isIn(liste[i]):
+            rm(liste[i], book)
+            #TODO niveau score
 
 def sumValBooksInLib_i(data, i):
     """

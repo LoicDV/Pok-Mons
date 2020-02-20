@@ -43,13 +43,13 @@ def tri_book(big):
         t.append(liste)
         t.sort(reverse=True)
     res = []
-    for i in range(len(t)-1):
+    for i in range(len(t)):
         res[i] = t[i][1]
     return res
 
 def isIn(bibli, book):
     t = bibli[1]
-    for i in range (len(t)- 1):
+    for i in range (len(t)):
         if (t[i] == book):
             return True
     return False
@@ -66,7 +66,7 @@ def rm(bibli, book):
 
 def refresh(big, book):
     liste = big[4]
-    longueur = len(liste) - 1
+    longueur = len(liste)
     for i in range(longueur):
         if isIn(liste[i]):
             rm(liste[i], book)

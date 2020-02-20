@@ -19,6 +19,16 @@ def read(file):
 
         return (books, lib, days, scores, list_lib)
 
+def rm(bibli, book):
+    t = bibli[1]
+    verif = False
+    i = 0
+    while (i != len(t)) and (verif == False):
+        if (t[i] == book):
+            t.remove(book)
+            verif = True
+        i += 1
+
 def sumValBooksInLib_i(data, i):
     """
     return un tuple de 2 elements :
@@ -30,8 +40,6 @@ def sumValBooksInLib_i(data, i):
     for k in lib[1]:
         res += data[3][k]
     return (res, lib[0][0])
-
-
 
 
 if __name__ == "__main__":

@@ -19,6 +19,18 @@ def read(file):
 
         return (books, lib, days, scores, list_lib)
 
+def sumValBooksInLib_i(data, i):
+    """
+    return un tuple de 2 elements :
+    0 : La somme du score des livres dans la biblio i
+    1 : le nombre total de livres dans la biblio i
+    """
+    lib = data[4][i]
+    res = 0
+    for k in lib[1]:
+        res += data[3][k]
+    return (res, lib[0][0])
+
 def tri_book(big):
     id_books = big[4][1]
     nombre = big[0]
@@ -60,24 +72,43 @@ def refresh(big, book):
             rm(liste[i], book)
             #TODO niveau score
 
-def sumValBooksInLib_i(data, i):
-    """
-    return un tuple de 2 elements :
-    0 : La somme du score des livres dans la biblio i
-    1 : le nombre total de livres dans la biblio i
-    """
-    lib = data[4][i]
-    res = 0
-    for k in lib[1]:
-        res += data[3][k]
-    return (res, lib[0][0])
+def write(data, values, name="output.txt"):
+    with open(name, 'w') as f:
+        f.write(str(data[1])+"\n")
+        for k in range(len(values)):
+            best_lib = values.index(max(values))
+            f.write(str(best_lib) + " " + str(data[4][best_lib][0][0]) + "\n")
+
+            f.write('output books\n')
+
+            values[best_lib] = -42
+
 
 
 if __name__ == "__main__":
 
     data = read(sys.argv[1])
+    values_of_lib = []
+
     for i in range(data[1]):
-        print(sumValBooksInLib_i(data, i))
+        temp = sumValBooksInLib_i(data, i)
+        moyenne = temp[0]/temp[1]
+        livre_par_jour = data[4][i][0][2]
+        output_moy = moyenne * livre_par_jour
+        signup = data[4][i][0][1]
+        duree_vie = data[4][i][0][0] / livre_par_jour
+
+        if duree_vie > data[2]:
+            VALUE = 0
+        else:
+            VALUE = (output_moy*duree_vie) / ((signup/10)+1)
+        values_of_lib.append(VALUE)
+        # print(i, "|", VALUE, "|", output_moy, "|", signup, "|", duree_vie)
+
+    name = sys.argv[1]
+    write(data, values_of_lib, name=name[:len(name)-4]+"_output.txt")
+
+
     """
     data a 5 éléments :
        0 : le nb de livre

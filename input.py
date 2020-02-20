@@ -1,35 +1,55 @@
+
 import sys
 
 
 def read(file):
     with open(file, "r") as f:
         first = f.readline().strip()
-        books, libr, days = first.split(" ")
-        books, libr, days = int(books), int(libr), int(days)
-        scores = f.readline().strip().split(" ")
-        list_libr = []
-        for i in range(libr):
+        books, lib, days = first.split(" ")
+        books, lib, days = int(books), int(lib), int(days)
+        scores = list(map(int, f.readline().strip().split(" ")))
+        list_lib = []
+        for i in range(lib):
             # gérer la biblio numéro i
             # Le nombre de livres, biblio et de jours
             # sont dans les var "books", "libr" et "days"
-            config1 = f.readline().strip().split(" ")
-            config2 = f.readline().strip().split(" ")
-            list_libr.append((config1, config2))
+            config1 = list(map(int, f.readline().strip().split(" ")))
+            config2 = list(map(int, f.readline().strip().split(" ")))
+            list_lib.append((config1, config2))
 
-        return (books, libr, days, scores, list_libr)
+        return (books, lib, days, scores, list_lib)
+
+def sumValBooksInLib_i(data, i):
+    """
+    return un tuple de 2 elements :
+    0 : La somme du score des livres dans la biblio i
+    1 : le nombre total de livres dans la biblio i
+    """
+    lib = data[4][i]
+    res = 0
+    for k in lib[1]:
+        res += data[3][k]
+    return (res, lib[0][0])
+
 
 
 
 if __name__ == "__main__":
 
-    t = read(sys.argv[1])
-    print(t)
+    data = read(sys.argv[1])
+    for i in range(data[1]):
+        print(sumValBooksInLib_i(data, i))
     """
-     t a 5 éléments. Le premier est le nb de livre, second est le nb de bibli
-     le 3ème est le nb de jours
-     Le 4ème est une liste où l'élément à la place i est le score du livre i
-     Le 5ème une liste où l'élément à la place i est la bibliothètque i :
-        la bibli i est un tuple de 2 éléments :
-            1er : (nb livres dedans, nb de jour pour signup, livre par jours)
-            2eme : liste des id des livres dispo
+    data a 5 éléments :
+       0 : le nb de livre
+       1 : le nb de bibli
+       2 : le nb de jours
+       3 : liste où l'élément à la place i est le score du livre i
+       4 : liste où l'élément à la place i est la bibliothèque i :
+          la bibli i est un tuple de 2 éléments :
+            0 : tuple de 3 éléments :
+                0 : nb livres dedans
+                1 : nb de jour pour signup
+                2 : livres par jours
+            1 : liste des id des livres dispo
     """

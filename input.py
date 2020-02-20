@@ -19,6 +19,22 @@ def read(file):
 
         return (books, lib, days, scores, list_lib)
 
+def tri_book(big):
+    id_books = big[4][1]
+    nombre = big[0]
+    score_books = big[3]
+    t = []
+    i = 0
+    while len(t) != len(id_books):
+        tmp = id_books[i]
+        liste = [score_books[tmp], tmp]
+        t.append(liste)
+        t.sort(reverse=True)
+    res = []
+    for i in range(len(t)-1):
+        res[i] = t[i][1]
+    return res
+
 def isIn(bibli, book):
     t = bibli[1]
     for i in range (len(t)- 1):
